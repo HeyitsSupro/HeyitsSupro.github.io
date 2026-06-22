@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supratik Biswas — Statistics, Optimization & Quantitative Finance</title>
+<meta name="description" content="Portfolio of Supratik Biswas — Statistical Data Science undergrad at ISI Kolkata. Quantitative finance, machine learning, optimization, competitive programming.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ tokens ============ */
+:root{
+  --paper:#FCFCFA;
+  --card:#FFFFFF;
+  --ink:#1B263B;
+  --muted:#5B6B7E;
+  --hair:#D8DFE8;
+  --grid:rgba(43,91,199,0.07);
+  --grid-strong:rgba(43,91,199,0.12);
+  --blue:#2456C4;       /* ballpoint pen */
+  --red:#C73E1D;        /* annotation pen / down-tick */
+  --green:#117B52;      /* up-tick */
+  --serif:"STIX Two Text", Georgia, serif;
+  --sans:"IBM Plex Sans", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, monospace;
+  --maxw:1060px;
+}
+
+/* ============ base ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    linear-gradient(var(--grid-strong) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-strong) 1px, transparent 1px);
+  background-size:28px 28px, 28px 28px, 140px 140px, 140px 140px;
+  font-size:16.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:#2456C4;color:#fff}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:2px}
+img,svg,canvas{display:block}
+.mono{font-family:var(--mono)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+section{scroll-margin-top:96px}
+
+/* ============ progress bar ============ */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--red);z-index:60}
+
+/* ============ nav ============ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:rgba(252,252,250,0.88);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border-bottom:1px solid transparent;
+  transition:border-color .25s, box-shadow .25s;
+}
+nav.scrolled{border-bottom-color:var(--hair);box-shadow:0 1px 0 rgba(27,38,59,0.03)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:28px}
+.logo{font-family:var(--serif);font-style:italic;font-weight:600;font-size:1.05rem;color:var(--ink)}
+.logo:hover{text-decoration:none;color:var(--blue)}
+.nav-links{display:flex;gap:22px;list-style:none;margin-left:auto}
+.nav-links a{
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);padding:4px 1px;border-bottom:2px solid transparent;
+}
+.nav-links a:hover{color:var(--ink);text-decoration:none}
+.nav-links a.active{color:var(--ink);border-bottom-color:var(--red)}
+#menuBtn{display:none;margin-left:auto;background:none;border:1px solid var(--hair);border-radius:3px;padding:8px 9px;cursor:pointer}
+#menuBtn span{display:block;width:18px;height:2px;background:var(--ink);transition:transform .25s,opacity .2s}
+#menuBtn span+span{margin-top:4px}
+body.menu-open #menuBtn span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.menu-open #menuBtn span:nth-child(2){opacity:0}
+body.menu-open #menuBtn span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* ============ hero ============ */
+header.hero{padding:150px 0 64px}
+.eyebrow{
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:18px;
+}
+.eyebrow .dot{color:var(--red)}
+h1{
+  font-family:var(--serif);font-weight:600;letter-spacing:-0.015em;
+  font-size:clamp(2.6rem, 6.5vw, 4.2rem);line-height:1.06;margin-bottom:20px;
+}
+.tagline{font-size:clamp(1.02rem, 1.6vw, 1.18rem);color:var(--muted);max-width:42em;margin-bottom:26px}
+.tagline b{color:var(--ink);font-weight:600}
+.hero-links{display:flex;flex-wrap:wrap;gap:10px 26px;font-family:var(--mono);font-size:.85rem;margin-bottom:38px}
+.hero-links a{color:var(--ink)}
+.hero-links a:hover{color:var(--blue)}
+.hero-links .sep{color:var(--hair)}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:54px}
+.btn{
+  font-family:var(--mono);font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;
+  border:1px solid var(--ink);border-radius:2px;padding:12px 20px;cursor:pointer;
+  color:var(--ink);background:var(--card);transition:background .2s,color .2s,transform .15s;
+  display:inline-block;
+}
+.btn:hover{background:var(--ink);color:var(--paper);text-decoration:none;transform:translateY(-1px)}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.primary:hover{background:var(--blue);border-color:var(--blue)}
+
+/* ============ fig 0 — live chart ============ */
+.fig0{margin:0}
+.chart-frame{
+  position:relative;height:clamp(280px, 40vh, 400px);
+  background:var(--card);border:1px solid var(--hair);border-radius:3px;
+  overflow:hidden;
+}
+.chart-frame canvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
+.fig0 figcaption{
+  display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;align-items:baseline;
+  font-family:var(--mono);font-size:.76rem;color:var(--muted);margin-top:10px;
+}
+.fig0 figcaption .figno{color:var(--red);font-weight:600}
+.resim{
+  font-family:var(--mono);font-size:.76rem;background:none;border:none;cursor:pointer;
+  color:var(--blue);padding:0;border-bottom:1px dashed var(--blue);
+}
+.resim:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* ============ section headers ============ */
+.sec{display:flex;align-items:baseline;gap:18px;margin-bottom:42px}
+.sec-no{font-family:var(--mono);font-size:.85rem;font-weight:600;color:var(--red);white-space:nowrap}
+.sec-title{font-family:var(--serif);font-weight:600;font-size:clamp(1.55rem, 3vw, 2rem);letter-spacing:-0.01em;position:relative}
+.sec-rule{flex:1;height:1px;background:var(--hair);transform:translateY(-6px)}
+.scribble{position:absolute;left:0;bottom:-7px;width:100%;height:10px;overflow:visible}
+.scribble path{
+  fill:none;stroke:var(--red);stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:230;stroke-dashoffset:230;
+}
+.in .scribble path{animation:draw .7s .25s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+main section{padding:78px 0}
+
+/* ============ about ============ */
+.about-grid{display:grid;grid-template-columns:1fr 270px;gap:56px;align-items:start}
+.about-prose p{margin-bottom:18px;max-width:60ch}
+.about-prose p:last-child{margin-bottom:0}
+.marginalia{
+  border-left:2px solid var(--hair);padding:4px 0 4px 20px;
+  font-family:var(--mono);font-size:.8rem;line-height:2.05;color:var(--muted);
+}
+.marginalia .k{color:var(--red)}
+.marginalia .v{color:var(--ink)}
+
+/* ============ projects ============ */
+.proj-list{display:grid;gap:22px}
+.proj{
+  background:var(--card);border:1px solid var(--hair);border-radius:3px;
+  padding:28px 30px;transition:border-color .2s, box-shadow .25s, transform .25s;
+  position:relative;
+}
+.proj:hover{
+  border-color:var(--ink);transform:translateY(-3px);
+  box-shadow:0 10px 26px -14px rgba(27,38,59,0.28);
+}
+.proj-meta{
+  display:flex;flex-wrap:wrap;gap:6px 16px;font-family:var(--mono);
+  font-size:.74rem;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;
+}
+.proj-meta .when{color:var(--red);font-weight:600}
+.proj h3{font-family:var(--serif);font-weight:600;font-size:1.32rem;letter-spacing:-0.01em;margin-bottom:12px}
+.proj h3 a{color:var(--ink)}
+.proj h3 a:hover{color:var(--blue);text-decoration:none}
+.proj p{color:var(--muted);font-size:.95rem;max-width:72ch;margin-bottom:18px}
+.proj p b{color:var(--ink);font-weight:600}
+.proj-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.03em;
+  border:1px solid var(--hair);border-radius:2px;padding:4px 9px;color:var(--muted);
+  background:var(--paper);transition:border-color .2s,color .2s;
+}
+.proj:hover .tag{border-color:#C2CBD8;color:var(--ink)}
+.code-link{font-family:var(--mono);font-size:.8rem;white-space:nowrap}
+.code-link .arrow{display:inline-block;transition:transform .2s}
+.code-link:hover .arrow{transform:translate(2px,-2px)}
+
+/* ============ results table ============ */
+.tablecap{font-family:var(--mono);font-size:.78rem;color:var(--muted);margin-bottom:14px}
+.tablecap .figno{color:var(--red);font-weight:600}
+.table-scroll{overflow-x:auto;border:1px solid var(--hair);border-radius:3px;background:var(--card)}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);text-align:left;font-weight:600;
+  padding:13px 22px;border-bottom:1px solid var(--ink);
+}
+td{padding:14px 22px;border-bottom:1px solid var(--hair);font-size:.93rem;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:background .15s}
+tbody tr:hover{background:#F4F7FB}
+td.yr{font-family:var(--mono);font-size:.82rem;color:var(--muted);white-space:nowrap}
+td.res{font-weight:600}
+td.res .hl{color:var(--green)}
+td.ev{color:var(--muted)}
+
+/* ============ skills ============ */
+.skill-group{display:grid;grid-template-columns:170px 1fr;gap:18px;align-items:start;padding:20px 0;border-bottom:1px solid var(--hair)}
+.skill-group:first-of-type{border-top:1px solid var(--hair)}
+.skill-label{font-family:var(--mono);font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:7px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{
+  font-family:var(--mono);font-size:.8rem;border:1px solid var(--hair);border-radius:2px;
+  background:var(--card);padding:6px 13px;color:var(--ink);
+  transition:background .18s,color .18s,border-color .18s,transform .15s;cursor:default;
+}
+.chip:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);transform:translateY(-2px)}
+.chip.hot{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip.hot:hover{background:var(--blue);border-color:var(--blue)}
+
+/* ============ education ============ */
+.edu-row{
+  display:grid;grid-template-columns:1fr auto;gap:6px 26px;align-items:baseline;
+  padding:22px 4px;border-bottom:1px solid var(--hair);
+}
+.edu-row:first-of-type{border-top:1px solid var(--hair)}
+.edu-deg{font-family:var(--serif);font-weight:600;font-size:1.12rem}
+.edu-inst{color:var(--muted);font-size:.92rem;grid-column:1}
+.edu-meta{font-family:var(--mono);font-size:.8rem;color:var(--muted);text-align:right;grid-row:1 / span 2;align-self:center}
+.edu-meta .score{color:var(--ink);font-weight:600}
+.courses{margin-top:54px}
+.courses h3{font-family:var(--serif);font-weight:600;font-size:1.15rem;margin-bottom:22px}
+.course-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+.course-col h4{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--red);font-weight:600;margin-bottom:12px;
+}
+.course-col ul{list-style:none;font-size:.86rem;color:var(--muted);line-height:1.9}
+.course-col li::before{content:"–";margin-right:8px;color:var(--hair)}
+
+/* ============ appendix ============ */
+.appx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.appx{
+  background:var(--card);border:1px solid var(--hair);border-radius:3px;padding:24px 26px;
+  transition:border-color .2s, transform .25s, box-shadow .25s;
+}
+.appx:hover{border-color:var(--ink);transform:translateY(-3px);box-shadow:0 10px 26px -14px rgba(27,38,59,0.25)}
+.appx .glyph{font-family:var(--mono);font-size:.8rem;font-weight:600;color:var(--red);margin-bottom:14px}
+.appx h3{font-family:var(--serif);font-weight:600;font-size:1.08rem;margin-bottom:8px}
+.appx p{color:var(--muted);font-size:.88rem}
+.appx p .mono{font-size:.8rem;color:var(--ink)}
+
+/* ============ contact ============ */
+#contact{padding-bottom:110px}
+.contact-inner{max-width:620px}
+.contact-inner .lede{font-family:var(--serif);font-size:clamp(1.15rem,2.2vw,1.4rem);font-style:italic;margin-bottom:30px}
+.contact-links{display:flex;flex-wrap:wrap;gap:10px 26px;font-family:var(--mono);font-size:.85rem;margin-top:26px}
+.contact-links a{color:var(--ink)}
+.contact-links a:hover{color:var(--blue)}
+
+/* ============ footer ============ */
+footer{border-top:1px solid var(--hair);padding:26px 0 34px}
+.foot-inner{
+  max-width:var(--maxw);margin:0 auto;padding:0 24px;
+  display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;
+  font-family:var(--mono);font-size:.74rem;color:var(--muted);
+}
+
+/* ============ reveal ============ */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ============ responsive ============ */
+@media (max-width:900px){
+  .about-grid{grid-template-columns:1fr;gap:36px}
+  .course-grid{grid-template-columns:repeat(2,1fr)}
+  .appx-grid{grid-template-columns:1fr}
+  .skill-group{grid-template-columns:1fr;gap:10px}
+}
+@media (max-width:860px){
+  #menuBtn{display:block}
+  .nav-links{
+    display:none;position:fixed;top:55px;left:0;right:0;
+    background:var(--paper);border-bottom:1px solid var(--hair);
+    flex-direction:column;gap:0;padding:10px 24px 18px;margin-left:0;
+  }
+  body.menu-open .nav-links{display:flex}
+  .nav-links a{display:block;padding:11px 2px;font-size:.85rem}
+}
+@media (max-width:560px){
+  header.hero{padding-top:120px}
+  .course-grid{grid-template-columns:1fr}
+  .edu-row{grid-template-columns:1fr}
+  .edu-meta{grid-row:auto;text-align:left;margin-top:4px}
+  main section{padding:60px 0}
+}
+
+/* ============ reduced motion ============ */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .in .scribble path,.scribble path{stroke-dashoffset:0;animation:none}
+  .proj,.appx,.chip,.btn{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div id="progress" aria-hidden="true"></div>
+
+<nav id="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a class="logo" href="#top">S.&hairsp;Biswas</a>
+    <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <p class="eyebrow reveal">Indian Statistical Institute, Kolkata <span class="dot">·</span> Statistical Data Science ’24–’28</p>
+  <h1 class="reveal">Supratik Biswas</h1>
+  <p class="tagline reveal">I take messy, open-ended problems and turn them into <b>models, algorithms and working code</b> — across quantitative finance, machine learning and optimization. Preferably the laziest solution that is still correct.</p>
+  <div class="hero-links reveal">
+    <a href="mailto:supratikbiswas100@gmail.com">supratikbiswas100@gmail.com</a><span class="sep">/</span>
+    <a href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">github.com/HeyitsSupro</a><span class="sep">/</span>
+    <a href="https://linkedin.com/in/supratikbiswas" target="_blank" rel="noopener">linkedin.com/in/supratikbiswas</a>
+  </div>
+  <div class="cta-row reveal">
+    <a class="btn primary" href="#work">View selected work ↓</a>
+    <a class="btn" href="#contact">Get in touch</a>
+  </div>
+
+  <figure class="fig0 reveal">
+    <div class="chart-frame" id="chartFrame">
+      <canvas id="gbm" role="img" aria-label="Live simulated stock price path generated by geometric Brownian motion"></canvas>
+    </div>
+    <figcaption>
+      <span><span class="figno">Fig. 0</span> — Geometric Brownian motion, simulated live in your browser. μ = 0.08, σ = 0.20, S₀ = 100, dt = 1/252 · <span id="seedLbl">seed 0x0000</span></span>
+      <button class="resim" id="resim" type="button">↻ re-run simulation</button>
+    </figcaption>
+  </figure>
+</header>
+
+<main>
+
+  <!-- ============ §1 ABOUT ============ -->
+  <section id="about" class="wrap">
+    <header class="sec reveal">
+      <span class="sec-no">§ 1</span>
+      <h2 class="sec-title">About
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
+      <span class="sec-rule" aria-hidden="true"></span>
+    </header>
+    <div class="about-grid">
+      <div class="about-prose reveal">
+        <p>I’m a problem-solver at heart, with a natural pull toward coding, algorithmic thinking and building solutions to complex, open-ended problems. Right now that means a Bachelor of Statistical Data Science at ISI Kolkata, where the coursework runs from measure-flavoured probability and stochastic processes to regression, optimization and numerical methods.</p>
+        <p>The work I enjoy most sits where statistics meets computation and markets: a MILP optimizer that places warehouses across India, an arbitrage-free completion of an implied-volatility surface, physics-informed neural networks that recover hidden parameters from noisy data. Python is home base; C++ and R are close behind.</p>
+        <p>Outside coursework I trade in competitions (global rank 249 at IMC’s Prosperity 3), grind Codeforces, and solve Rubik’s cubes — ideally all three with the minimum number of moves.</p>
+      </div>
+      <aside class="marginalia reveal" aria-label="Quick facts">
+        <div><span class="k">based_in</span> — <span class="v">Kolkata, IN</span></div>
+        <div><span class="k">studying</span> — <span class="v">B.&thinsp;Stat. Data Sci. @ ISI</span></div>
+        <div><span class="k">focus</span> — <span class="v">quant · ML · optimization</span></div>
+        <div><span class="k">stack</span> — <span class="v">Python / C++ / R</span></div>
+        <div><span class="k">status</span> — <span class="v">open to internships</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ §2 SELECTED WORK ============ -->
+  <section id="work" class="wrap">
+    <header class="sec reveal">
+      <span class="sec-no">§ 2</span>
+      <h2 class="sec-title">Selected work
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
+      <span class="sec-rule" aria-hidden="true"></span>
+    </header>
+
+    <div class="proj-list stagger">
+      <article class="proj">
+        <div class="proj-meta">
+          <span class="when">Apr 2026</span>
+          <span>with Prof. Ramij Rahaman</span>
+        </div>
+        <!-- TODO: point this link at the specific repository -->
+        <h3><a href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">Comparative study of BVP solvers — PINN vs FDM vs analytical</a></h3>
+        <p>Benchmarked finite differences, physics-informed neural networks and closed-form solutions on linear, nonlinear (Bratu) and inverse boundary value problems of increasing difficulty. Built FDM with Newton iteration and PINNs in PyTorch with automatic differentiation, hard/soft boundary enforcement and Adam&nbsp;+&nbsp;L-BFGS training. <b>PINNs recovered unknown parameters from noisy observations — something neither FDM nor analytical methods can do</b> — and second-order FDM convergence was verified empirically.</p>
+        <div class="proj-foot">
+          <div class="tags">
+            <span class="tag">PyTorch</span><span class="tag">PINNs</span><span class="tag">FDM</span><span class="tag">Numerical analysis</span>
+          </div>
+          <a class="code-link" href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">view code <span class="arrow">↗</span></a>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="proj-meta">
+          <span class="when">Apr 2026</span>
+          <span>NQFO 2026 contest entry</span>
+        </div>
+        <!-- TODO: point this link at the specific repository -->
+        <h3><a href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">Implied volatility surface completion</a></h3>
+        <p>A two-layer ensemble — quadratic smile fit&nbsp;+&nbsp;LightGBM — predicting ~1,700 missing implied-volatility entries on a synthetic NIFTY50 options surface. <b>No-arbitrage built in</b>: calendar-spread monotonicity via isotonic regression, butterfly positivity via constrained quadratic fitting. K-means regime detection (calm / normal / turbulent) on ATM IV and term-structure slope fed LightGBM, with blend weights tuned per moneyness bucket by leave-one-out validation.</p>
+        <div class="proj-foot">
+          <div class="tags">
+            <span class="tag">LightGBM</span><span class="tag">Options</span><span class="tag">Isotonic regression</span><span class="tag">K-means</span>
+          </div>
+          <a class="code-link" href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">view code <span class="arrow">↗</span></a>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="proj-meta">
+          <span class="when">Apr–May 2025</span>
+          <span>with Prof. Kaushik Jana</span>
+        </div>
+        <!-- TODO: point this link at the specific repository -->
+        <h3><a href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">E-commerce warehouse location optimization</a></h3>
+        <p>A MILP warehouse-placement optimizer in Python (PuLP&nbsp;+&nbsp;CBC) for Indian e-commerce startups across the country’s top 10 cities, using Haversine distances under budget and delivery-time constraints. <b>Cut estimated delivery costs by 12%</b> while the selected warehouses served 80% of the target market within the 36-hour delivery limit.</p>
+        <div class="proj-foot">
+          <div class="tags">
+            <span class="tag">MILP</span><span class="tag">PuLP</span><span class="tag">CBC solver</span><span class="tag">Geospatial</span>
+          </div>
+          <a class="code-link" href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">view code <span class="arrow">↗</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ §3 RESULTS ============ -->
+  <section id="results" class="wrap">
+    <header class="sec reveal">
+      <span class="sec-no">§ 3</span>
+      <h2 class="sec-title">Results
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
+      <span class="sec-rule" aria-hidden="true"></span>
+    </header>
+
+    <p class="tablecap reveal"><span class="figno">Table 1</span> — Selected competitive results, 2019–2025.</p>
+    <div class="table-scroll reveal">
+      <table>
+        <thead>
+          <tr><th>Year</th><th>Result</th><th>Event</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="yr">2025</td><td class="res"><span class="hl">Global Rank 249</span> · AIR 43</td><td class="ev">Prosperity 3 Challenge, IMC Trading</td></tr>
+          <tr><td class="yr">2024</td><td class="res">Rank 1, category</td><td class="ev">ISI Entrance Examination</td></tr>
+          <tr><td class="yr">2024</td><td class="res">Rank 87, category</td><td class="ev">WBJEE</td></tr>
+          <tr><td class="yr">2023</td><td class="res">Qualified</td><td class="ev">Regional Mathematics Olympiad (RMO)</td></tr>
+          <tr><td class="yr">2020–24</td><td class="res">Merit Certificate, 4 consecutive years</td><td class="ev">IOQM</td></tr>
+          <tr><td class="yr">2020–21</td><td class="res">Zonal Bronze · AIR 8 · Intl. Rank 10</td><td class="ev">SOF International Mathematics Olympiad</td></tr>
+          <tr><td class="yr">2020–21</td><td class="res">Distinction · AIR 37 · Intl. Rank 49</td><td class="ev">SOF National Science Olympiad</td></tr>
+          <tr><td class="yr">2019</td><td class="res">AIR 37 · 1st in school</td><td class="ev">American Mathematics Competition (AMC 8), MAA</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ §4 SKILLS ============ -->
+  <section id="skills" class="wrap">
+    <header class="sec reveal">
+      <span class="sec-no">§ 4</span>
+      <h2 class="sec-title">Skills
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
+      <span class="sec-rule" aria-hidden="true"></span>
+    </header>
+
+    <div class="stagger">
+      <div class="skill-group">
+        <div class="skill-label">Languages</div>
+        <div class="chips">
+          <span class="chip hot">Python</span><span class="chip">C++</span><span class="chip">R</span><span class="chip">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Libraries</div>
+        <div class="chips">
+          <span class="chip">NumPy</span><span class="chip">Pandas</span><span class="chip">PyTorch</span><span class="chip">Scikit-learn</span><span class="chip">LightGBM</span><span class="chip">Matplotlib</span><span class="chip">PuLP</span><span class="chip">dplyr</span><span class="chip">ggplot2</span><span class="chip">tidyr</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Tools</div>
+        <div class="chips">
+          <span class="chip">Git &amp; GitHub</span><span class="chip">Excel</span><span class="chip">LaTeX</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Concepts</div>
+        <div class="chips">
+          <span class="chip">Optimization</span><span class="chip">Statistical inference</span><span class="chip">Regression techniques</span><span class="chip">Probability theory</span><span class="chip">Stochastic processes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ §5 EDUCATION ============ -->
+  <section id="education" class="wrap">
+    <header class="sec reveal">
+      <span class="sec-no">§ 5</span>
+      <h2 class="sec-title">Education
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
+      <span class="sec-rule" aria-hidden="true"></span>
+    </header>
+
+    <div class="stagger">
+      <div class="edu-row">
+        <div class="edu-deg">Bachelor of Statistical Data Science</div>
+        <div class="edu-inst">Indian Statistical Institute, Kolkata</div>
+        <div class="edu-meta">2024–28 (exp.) · <span class="score">73.7%</span></div>
+      </div>
+      <div class="edu-row">
+        <div class="edu-deg">Class XII (Senior Secondary), CBSE</div>
+        <div class="edu-inst">Delhi Public School, Ruby Park, Kolkata</div>
+        <div class="edu-meta">2024 · <span class="score">83.8%</span></div>
+      </div>
+      <div class="edu-row">
+        <div class="edu-deg">Class X (Secondary), CBSE</div>
+        <div class="edu-inst">Delhi Public School, Ruby Park, Kolkata</div>
+        <div class="edu-meta">2022 · <span class="score">95.6%</span></div>
+      </div>
+    </div>
+
+    <div class="courses reveal">
+      <h3>Selected coursework</h3>
+      <div class="course-grid">
+        <div class="course-col">
+          <h4>Statistics &amp; Probability</h4>
+          <ul>
+            <li>Probability Theory</li>
+            <li>Statistical Inference</li>
+            <li>Regression Techniques</li>
+            <li>Linear Statistical Models</li>
+            <li>Multivariate Analysis</li>
+            <li>Nonparametric Inference &amp; MCMC</li>
+            <li>Stochastic Processes</li>
+          </ul>
+        </div>
+        <div class="course-col">
+          <h4>Data Science &amp; Computing</h4>
+          <ul>
+            <li>Data Structures &amp; Algorithms</li>
+            <li>Database Management Systems</li>
+            <li>Data Analysis in R &amp; Python</li>
+          </ul>
+        </div>
+        <div class="course-col">
+          <h4>Mathematics</h4>
+          <ul>
+            <li>Linear Algebra</li>
+            <li>Multivariate Calculus</li>
+            <li>Differential Equations</li>
+            <li>Real Analysis</li>
+            <li>Optimization &amp; Numerical Methods</li>
+            <li>Graph Theory</li>
+            <li>Topology</li>
+          </ul>
+        </div>
+        <div class="course-col">
+          <h4>Economics</h4>
+          <ul>
+            <li>Microeconomics</li>
+            <li>Macroeconomics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APPENDIX ============ -->
+  <section id="beyond" class="wrap">
+    <header class="sec reveal">
+      <span class="sec-no">Appendix A</span>
+      <h2 class="sec-title">Beyond the syllabus
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
+      <span class="sec-rule" aria-hidden="true"></span>
+    </header>
+
+    <div class="appx-grid stagger">
+      <article class="appx">
+        <div class="glyph">&lt;/&gt;</div>
+        <h3>Competitive programming</h3>
+        <p>Regular on Codeforces — <span class="mono">max rating 1436</span>, 100+ problems solved. Contests are the gym for clean, fast thinking under pressure.</p>
+      </article>
+      <article class="appx">
+        <div class="glyph">[CPU]</div>
+        <h3>Systems &amp; hardware</h3>
+        <p>Enthusiast in computer systems, CPU/GPU architecture and hardware optimization — I like knowing what the code actually runs on.</p>
+      </article>
+      <article class="appx">
+        <div class="glyph">3×3</div>
+        <h3>Twisty puzzles</h3>
+        <p>Speedsolving and collecting a wide variety of Rubik’s cubes and twisty puzzles. Group theory you can hold in one hand.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ §6 CONTACT ============ -->
+  <section id="contact" class="wrap">
+    <header class="sec reveal">
+      <span class="sec-no">§ 6</span>
+      <h2 class="sec-title">Correspondence
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
+      <span class="sec-rule" aria-hidden="true"></span>
+    </header>
+
+    <div class="contact-inner reveal">
+      <p class="lede">Open to internships, research collaborations, and good conversations about markets, models or mathematics.</p>
+      <a class="btn primary" href="mailto:supratikbiswas100@gmail.com">Write to me</a>
+      <div class="contact-links">
+        <a href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://linkedin.com/in/supratikbiswas" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="mailto:supratikbiswas100@gmail.com">Email ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>© <span id="yr">2026</span> Supratik Biswas</span>
+    <span>Set in STIX Two Text &amp; IBM Plex · hand-coded, no frameworks, no trackers</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- nav: scrolled state + progress bar ---------- */
+  var nav = document.getElementById("nav");
+  var progress = document.getElementById("progress");
+  function onScroll(){
+    var y = window.scrollY || document.documentElement.scrollTop;
+    nav.classList.toggle("scrolled", y > 8);
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
+    setActive(y);
+  }
+  window.addEventListener("scroll", onScroll, {passive:true});
+
+  /* ---------- mobile menu ---------- */
+  var menuBtn = document.getElementById("menuBtn");
+  var navLinks = document.getElementById("navLinks");
+  menuBtn.addEventListener("click", function(){
+    var open = document.body.classList.toggle("menu-open");
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  navLinks.addEventListener("click", function(e){
+    if(e.target.tagName === "A"){
+      document.body.classList.remove("menu-open");
+      menuBtn.setAttribute("aria-expanded","false");
+    }
+  });
+
+  /* ---------- active nav link ---------- */
+  var sections = ["about","work","results","skills","education","contact"].map(function(id){
+    return document.getElementById(id);
+  });
+  var linkMap = {};
+  navLinks.querySelectorAll("a").forEach(function(a){
+    linkMap[a.getAttribute("href").slice(1)] = a;
+  });
+  function setActive(y){
+    var current = null;
+    for(var i = 0; i < sections.length; i++){
+      if(sections[i] && sections[i].offsetTop - 160 <= y) current = sections[i].id;
+    }
+    navLinks.querySelectorAll("a").forEach(function(a){ a.classList.remove("active"); });
+    if(current && linkMap[current]) linkMap[current].classList.add("active");
+  }
+
+  /* ---------- scroll reveals (with stagger) ---------- */
+  document.querySelectorAll(".stagger").forEach(function(group){
+    Array.prototype.forEach.call(group.children, function(child, i){
+      child.classList.add("reveal");
+      child.style.transitionDelay = (i * 90) + "ms";
+    });
+  });
+  var revealEls = document.querySelectorAll(".reveal");
+  if(!RM && "IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add("in");
+          io.unobserve(en.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:"0px 0px -30px 0px"});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* ---------- footer year ---------- */
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  /* ================= Fig. 0 — live GBM chart ================= */
+  var frame = document.getElementById("chartFrame");
+  var canvas = document.getElementById("gbm");
+  var seedLbl = document.getElementById("seedLbl");
+  var resimBtn = document.getElementById("resim");
+  if(!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext("2d");
+
+  var MU = 0.08, SIG = 0.20, DT = 1/252, S0 = 100, N = 320;
+  var PAD = {l:50, r:16, t:16, b:28};
+  var INK = "#1B263B", MUT = "#5B6B7E", GREEN = "#117B52", RED = "#C73E1D", BLUE = "#2456C4";
+  var FONT = '12px "IBM Plex Mono", monospace';
+  var FONTB = '600 12px "IBM Plex Mono", monospace';
+
+  var W = 0, H = 0, dpr = 1;
+  var data = [], seed = 0, tCount = N - 1;
+  var drawProgress = RM ? 1 : 0;
+  var raf = null, tickTimer = null, animStart = null;
+  var running = false, started = false;
+  var hover = null;
+
+  /* mulberry32 seeded RNG */
+  function rng(s){
+    return function(){
+      s |= 0; s = (s + 0x6D2B79F5) | 0;
+      var t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function gauss(r){
+    var u = 0, v = 0;
+    while(u === 0) u = r();
+    while(v === 0) v = r();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+
+  function simulate(){
+    var r = rng(seed);
+    data = [S0];
+    for(var i = 1; i < N; i++){
+      var prev = data[i - 1];
+      data.push(prev * Math.exp((MU - 0.5*SIG*SIG)*DT + SIG*Math.sqrt(DT)*gauss(r)));
+    }
+    tCount = N - 1;
+    seedLbl.textContent = "seed 0x" + ("0000" + seed.toString(16)).slice(-4);
+  }
+
+  function bounds(){
+    var mn = Infinity, mx = -Infinity;
+    for(var i = 0; i < data.length; i++){
+      if(data[i] < mn) mn = data[i];
+      if(data[i] > mx) mx = data[i];
+    }
+    var pad = (mx - mn) * 0.12 || 1;
+    return [mn - pad, mx + pad];
+  }
+  function xAt(i){ return PAD.l + (W - PAD.l - PAD.r) * (i / (data.length - 1)); }
+  function yAt(v, mn, mx){ return PAD.t + (H - PAD.t - PAD.b) * (1 - (v - mn) / (mx - mn)); }
+
+  function render(){
+    if(W <= 0 || H <= 0 || data.length < 2) return;
+    ctx.clearRect(0, 0, W, H);
+    var b = bounds(), mn = b[0], mx = b[1];
+
+    /* horizontal gridlines + y labels */
+    ctx.font = FONT;
+    ctx.lineWidth = 1;
+    var ticks = 4;
+    for(var k = 0; k <= ticks; k++){
+      var v = mn + (mx - mn) * k / ticks;
+      var gy = Math.round(yAt(v, mn, mx)) + 0.5;
+      ctx.strokeStyle = "rgba(27,38,59,0.08)";
+      ctx.beginPath(); ctx.moveTo(PAD.l, gy); ctx.lineTo(W - PAD.r, gy); ctx.stroke();
+      ctx.fillStyle = MUT;
+      ctx.fillText(v.toFixed(0), 10, gy + 4);
+    }
+
+    /* x labels */
+    ctx.fillStyle = MUT;
+    var tLeft = tCount - (data.length - 1);
+    ctx.fillText("t=" + tLeft, PAD.l, H - 9);
+    var rightLbl = "t=" + tCount;
+    ctx.fillText(rightLbl, W - PAD.r - ctx.measureText(rightLbl).width, H - 9);
+
+    var upto = Math.max(2, Math.floor(data.length * drawProgress));
+
+    /* area fill */
+    ctx.beginPath();
+    ctx.moveTo(xAt(0), yAt(data[0], mn, mx));
+    for(var i = 1; i < upto; i++) ctx.lineTo(xAt(i), yAt(data[i], mn, mx));
+    ctx.lineTo(xAt(upto - 1), H - PAD.b);
+    ctx.lineTo(PAD.l, H - PAD.b);
+    ctx.closePath();
+    ctx.fillStyle = "rgba(27,38,59,0.05)";
+    ctx.fill();
+
+    /* price path */
+    ctx.beginPath();
+    ctx.moveTo(xAt(0), yAt(data[0], mn, mx));
+    for(var j = 1; j < upto; j++) ctx.lineTo(xAt(j), yAt(data[j], mn, mx));
+    ctx.strokeStyle = INK;
+    ctx.lineWidth = 1.8;
+    ctx.lineJoin = "round";
+    ctx.stroke();
+
+    /* last point + return label */
+    var last = data[upto - 1], first = data[0];
+    var up = last >= first;
+    var col = up ? GREEN : RED;
+    var lx = xAt(upto - 1), ly = yAt(last, mn, mx);
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(lx, ly, 3.5, 0, Math.PI * 2); ctx.fill();
+    var pct = (last / first - 1) * 100;
+    var lbl = (up ? "+" : "") + pct.toFixed(1) + "%";
+    ctx.font = FONTB;
+    var lw = ctx.measureText(lbl).width;
+    var tx = Math.min(lx + 9, W - PAD.r - lw);
+    var ty = Math.max(ly - 9, PAD.t + 12);
+    ctx.fillText(lbl, tx, ty);
+
+    /* hover crosshair */
+    if(hover !== null){
+      var hi = Math.min(hover, upto - 1);
+      var hx = xAt(hi), hy = yAt(data[hi], mn, mx);
+      ctx.save();
+      ctx.setLineDash([3, 3]);
+      ctx.strokeStyle = "rgba(27,38,59,0.35)";
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(hx, PAD.t); ctx.lineTo(hx, H - PAD.b); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(PAD.l, hy); ctx.lineTo(W - PAD.r, hy); ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = BLUE;
+      ctx.beginPath(); ctx.arc(hx, hy, 3, 0, Math.PI * 2); ctx.fill();
+
+      ctx.font = FONT;
+      var txt = "t=" + (tLeft + hi) + "  S=" + data[hi].toFixed(2);
+      var tw = ctx.measureText(txt).width;
+      var bx = hx + 12; if(bx + tw + 14 > W - PAD.r) bx = hx - tw - 26;
+      var by = hy - 30; if(by < PAD.t) by = hy + 12;
+      ctx.fillStyle = "rgba(255,255,255,0.95)";
+      ctx.strokeStyle = INK;
+      ctx.lineWidth = 1;
+      ctx.fillRect(bx, by, tw + 14, 21);
+      ctx.strokeRect(bx + 0.5, by + 0.5, tw + 14, 21);
+      ctx.fillStyle = INK;
+      ctx.fillText(txt, bx + 7, by + 15);
+    }
+  }
+
+  function resize(){
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = frame.clientWidth;
+    H = frame.clientHeight;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    render();
+  }
+
+  /* intro draw animation */
+  function animate(ts){
+    if(animStart === null) animStart = ts;
+    var k = Math.min(1, (ts - animStart) / 2600);
+    drawProgress = 1 - Math.pow(1 - k, 3);
+    render();
+    if(k < 1){
+      raf = requestAnimationFrame(animate);
+    } else {
+      raf = null;
+      startTicker();
+    }
+  }
+
+  /* live ticker: keep the path moving */
+  function startTicker(){
+    if(tickTimer) clearInterval(tickTimer);
+    tickTimer = setInterval(function(){
+      if(!running || document.hidden || hover !== null) return;
+      var prev = data[data.length - 1];
+      var z = gauss(Math.random);
+      data.push(prev * Math.exp((MU - 0.5*SIG*SIG)*DT + SIG*Math.sqrt(DT)*z));
+      if(data.length > N) data.shift();
+      tCount++;
+      render();
+    }, 380);
+  }
+
+  function begin(){
+    if(raf) cancelAnimationFrame(raf);
+    if(tickTimer) clearInterval(tickTimer);
+    raf = null; tickTimer = null; animStart = null;
+    simulate();
+    if(RM){
+      drawProgress = 1;
+      render();
+      startTicker();
+    } else {
+      drawProgress = 0;
+      raf = requestAnimationFrame(animate);
+    }
+  }
+
+  /* hover */
+  canvas.addEventListener("mousemove", function(e){
+    var rect = canvas.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    if(x < PAD.l || x > W - PAD.r){ hover = null; render(); return; }
+    var frac = (x - PAD.l) / (W - PAD.l - PAD.r);
+    hover = Math.max(0, Math.min(data.length - 1, Math.round(frac * (data.length - 1))));
+    render();
+  });
+  canvas.addEventListener("mouseleave", function(){ hover = null; render(); });
+
+  /* re-run */
+  resimBtn.addEventListener("click", function(){
+    seed = (Math.random() * 65536) | 0;
+    begin();
+  });
+
+  /* start when visible */
+  function firstStart(){
+    if(started) return;
+    started = true;
+    seed = (Math.random() * 65536) | 0;
+    begin();
+  }
+  if("IntersectionObserver" in window){
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        running = en.isIntersecting;
+        if(en.isIntersecting) firstStart();
+      });
+    }, {threshold:0.15});
+    cio.observe(frame);
+  } else {
+    running = true;
+    firstStart();
+  }
+
+  /* resize handling */
+  if("ResizeObserver" in window){
+    new ResizeObserver(function(){ resize(); }).observe(frame);
+  } else {
+    window.addEventListener("resize", resize);
+  }
+  resize();
+  onScroll();
+})();
+</script>
+</body>
+</html>

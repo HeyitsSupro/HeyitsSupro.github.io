@@ -134,6 +134,13 @@ h1{
 .sec-no{font-family:var(--mono);font-size:.85rem;font-weight:600;color:var(--red);white-space:nowrap}
 .sec-title{font-family:var(--serif);font-weight:600;font-size:clamp(1.55rem, 3vw, 2rem);letter-spacing:-0.01em;position:relative}
 .sec-rule{flex:1;height:1px;background:var(--hair);transform:translateY(-6px)}
+.scribble{position:absolute;left:0;bottom:-7px;width:100%;height:10px;overflow:visible}
+.scribble path{
+  fill:none;stroke:var(--red);stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:230;stroke-dashoffset:230;
+}
+.in .scribble path{animation:draw .7s .25s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
 
 main section{padding:78px 0}
 
@@ -148,7 +155,7 @@ main section{padding:78px 0}
 .marginalia .k{color:var(--red)}
 .marginalia .v{color:var(--ink)}
 
-/* ============ experience & projects ============ */
+/* ============ projects ============ */
 .proj-list{display:grid;gap:22px}
 .proj{
   background:var(--card);border:1px solid var(--hair);border-radius:3px;
@@ -168,17 +175,15 @@ main section{padding:78px 0}
 .proj h3 a{color:var(--ink)}
 .proj h3 a:hover{color:var(--blue);text-decoration:none}
 .proj p{color:var(--muted);font-size:.95rem;max-width:72ch;margin-bottom:18px}
-.proj p:last-child{margin-bottom:0}
 .proj p b{color:var(--ink);font-weight:600}
 .proj-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
 .tags{display:flex;flex-wrap:wrap;gap:8px}
 .tag{
   font-family:var(--mono);font-size:.7rem;letter-spacing:.03em;
   border:1px solid var(--hair);border-radius:2px;padding:4px 9px;color:var(--muted);
-  background:var(--paper);transition:background .18s,border-color .2s,color .2s,transform .15s;
+  background:var(--paper);transition:border-color .2s,color .2s;
 }
 .proj:hover .tag{border-color:#C2CBD8;color:var(--ink)}
-.tag:hover{background:var(--ink);color:var(--paper) !important;border-color:var(--ink);transform:translateY(-2px)}
 .code-link{font-family:var(--mono);font-size:.8rem;white-space:nowrap}
 .code-link .arrow{display:inline-block;transition:transform .2s}
 .code-link:hover .arrow{transform:translate(2px,-2px)}
@@ -215,8 +220,6 @@ td.ev{color:var(--muted)}
 .chip:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);transform:translateY(-2px)}
 .chip.hot{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .chip.hot:hover{background:var(--blue);border-color:var(--blue)}
-.chip.faint{color:var(--muted);border-style:dashed}
-.chip.faint:hover{color:var(--paper)}
 
 /* ============ education ============ */
 .edu-row{
@@ -230,7 +233,7 @@ td.ev{color:var(--muted)}
 .edu-meta .score{color:var(--ink);font-weight:600}
 .courses{margin-top:54px}
 .courses h3{font-family:var(--serif);font-weight:600;font-size:1.15rem;margin-bottom:22px}
-.course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:30px}
+.course-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
 .course-col h4{
   font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
   color:var(--red);font-weight:600;margin-bottom:12px;
@@ -266,20 +269,14 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
   font-family:var(--mono);font-size:.74rem;color:var(--muted);
 }
 
-/* ============ reveal (pop-in on scroll) ============ */
-.reveal{
-  opacity:0;
-  transform:translateY(22px) scale(0.955);
-  transition:
-    opacity .55s ease,
-    transform .65s cubic-bezier(0.22, 1.32, 0.36, 1); /* slight overshoot = pop */
-  will-change:opacity,transform;
-}
-.reveal.in{opacity:1;transform:translateY(0) scale(1)}
+/* ============ reveal ============ */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:none}
 
 /* ============ responsive ============ */
 @media (max-width:900px){
   .about-grid{grid-template-columns:1fr;gap:36px}
+  .course-grid{grid-template-columns:repeat(2,1fr)}
   .appx-grid{grid-template-columns:1fr}
   .skill-group{grid-template-columns:1fr;gap:10px}
 }
@@ -305,6 +302,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none;transition:none}
+  .in .scribble path,.scribble path{stroke-dashoffset:0;animation:none}
   .proj,.appx,.chip,.btn{transition:none}
 }
 </style>
@@ -321,7 +319,6 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
     </button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
       <li><a href="#work">Work</a></li>
       <li><a href="#results">Results</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -334,7 +331,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
 <header class="hero wrap" id="top">
   <p class="eyebrow reveal">Indian Statistical Institute, Kolkata <span class="dot">·</span> Statistical Data Science ’24–’28</p>
   <h1 class="reveal">Supratik Biswas</h1>
-  <p class="tagline reveal">I take messy, open-ended problems and turn them into <b>models, algorithms and working code</b> — across quantitative finance, machine learning and data science. Preferably the laziest solution that is still correct.</p>
+  <p class="tagline reveal">I take messy, open-ended problems and turn them into <b>models, algorithms and working code</b> — across quantitative finance, machine learning and optimization. Preferably the laziest solution that is still correct.</p>
   <div class="hero-links reveal">
     <a href="mailto:supratikbiswas100@gmail.com">supratikbiswas100@gmail.com</a><span class="sep">/</span>
     <a href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">github.com/HeyitsSupro</a><span class="sep">/</span>
@@ -350,7 +347,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
       <canvas id="gbm" role="img" aria-label="Live simulated stock price path generated by geometric Brownian motion"></canvas>
     </div>
     <figcaption>
-      <span><span class="figno">Fig. 0</span> — Geometric Brownian motion, simulated live in your browser. μ = 0.08, σ = 0.20, S₀ = 100, dt = 1/252</span>
+      <span><span class="figno">Fig. 0</span> — Geometric Brownian motion, simulated live in your browser. μ = 0.08, σ = 0.20, S₀ = 100, dt = 1/252 · <span id="seedLbl">seed 0x0000</span></span>
       <button class="resim" id="resim" type="button">↻ re-run simulation</button>
     </figcaption>
   </figure>
@@ -361,53 +358,35 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
   <!-- ============ §1 ABOUT ============ -->
   <section id="about" class="wrap">
     <header class="sec reveal">
-      <h2 class="sec-title">About</h2>
+      <span class="sec-no">§ 1</span>
+      <h2 class="sec-title">About
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
       <span class="sec-rule" aria-hidden="true"></span>
     </header>
     <div class="about-grid">
       <div class="about-prose reveal">
-        <p>I’m a third-year Statistical Data Science student at ISI Kolkata with a strong programming and problem-solving background. I build projects end to end, from the statistical or mathematical formulation through to working code, and pick up new tools and methods quickly as each problem needs them. Comfortable in Python and R, working across machine learning, data science and quantitative finance.</p>
+        <p>I’m a problem-solver at heart, with a natural pull toward coding, algorithmic thinking and building solutions to complex, open-ended problems. Right now that means a Bachelor of Statistical Data Science at ISI Kolkata, where the coursework runs from measure-flavoured probability and stochastic processes to regression, optimization and numerical methods.</p>
+        <p>The work I enjoy most sits where statistics meets computation and markets: a MILP optimizer that places warehouses across India, an arbitrage-free completion of an implied-volatility surface, physics-informed neural networks that recover hidden parameters from noisy data. Python is home base; C++ and R are close behind.</p>
+        <p>Outside coursework I trade in competitions (global rank 249 at IMC’s Prosperity 3), grind Codeforces, and solve Rubik’s cubes — ideally all three with the minimum number of moves.</p>
       </div>
       <aside class="marginalia reveal" aria-label="Quick facts">
         <div><span class="k">based_in</span> — <span class="v">Kolkata, IN</span></div>
-        <div><span class="k">studying</span> — <span class="v">Bachelor of Statistical Data Science, ISI Kolkata</span></div>
-        <div><span class="k">focus</span> — <span class="v">Quant · AI/ML · Data Science</span></div>
-        <div><span class="k">code</span> — <span class="v">Python / R</span></div>
-        <div><span class="k">speaks</span> — <span class="v">English · Hindi · Bengali</span></div>
+        <div><span class="k">studying</span> — <span class="v">B.&thinsp;Stat. Data Sci. @ ISI</span></div>
+        <div><span class="k">focus</span> — <span class="v">quant · ML · optimization</span></div>
+        <div><span class="k">stack</span> — <span class="v">Python / C++ / R</span></div>
         <div><span class="k">status</span> — <span class="v">open to internships</span></div>
       </aside>
     </div>
   </section>
 
-  <!-- ============ §2 EXPERIENCE ============ -->
-  <section id="experience" class="wrap">
-    <header class="sec reveal">
-      <h2 class="sec-title">Experience</h2>
-      <span class="sec-rule" aria-hidden="true"></span>
-    </header>
-
-    <div class="proj-list stagger">
-      <article class="proj">
-        <div class="proj-meta">
-          <span class="when">Jun 2026</span>
-          <span>Optiver, trading &amp; research program</span>
-        </div>
-        <h3>Future Focus Program</h3>
-        <p>Completed Optiver’s week-long summer trading and research program, covering market making, options and volatility, and quantitative research through daily trading games, simulations and quant challenges.</p>
-        <p><b>Finished 2nd of 24 teams</b> in Optibook, the closing live-market competition, trading against bots and other participants for best P&amp;L using aggressive market making and pairs trading.</p>
-        <div class="proj-foot">
-          <div class="tags">
-            <span class="tag">Market making</span><span class="tag">Options &amp; volatility</span><span class="tag">Pairs trading</span><span class="tag">Live trading sim</span>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- ============ §3 SELECTED WORK ============ -->
+  <!-- ============ §2 SELECTED WORK ============ -->
   <section id="work" class="wrap">
     <header class="sec reveal">
-      <h2 class="sec-title">Selected work</h2>
+      <span class="sec-no">§ 2</span>
+      <h2 class="sec-title">Selected work
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
       <span class="sec-rule" aria-hidden="true"></span>
     </header>
 
@@ -417,13 +396,14 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
           <span class="when">Apr 2026</span>
           <span>with Prof. Ramij Rahaman</span>
         </div>
-        <h3><a href="https://github.com/HeyitsSupro/BVP_Comparative_Study" target="_blank" rel="noopener">Comparative Study of BVP Solvers: PINN vs FDM vs Analytical</a></h3>
-        <p>Compared analytical, finite-difference (FDM) and physics-informed neural network (PINN) methods across linear, nonlinear (Bratu) and inverse boundary value problems. Implemented FDM with Newton iteration for the nonlinear case and PINNs in PyTorch with automatic differentiation, hard/soft boundary enforcement and Adam&nbsp;+&nbsp;L-BFGS training. <b>Recovered an unknown coefficient from noisy observations</b> by treating it as a trainable variable optimized jointly with the network, which FDM and analytical methods cannot do, and verified second-order FDM convergence empirically.</p>
+        <!-- TODO: point this link at the specific repository -->
+        <h3><a href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">Comparative study of BVP solvers — PINN vs FDM vs analytical</a></h3>
+        <p>Benchmarked finite differences, physics-informed neural networks and closed-form solutions on linear, nonlinear (Bratu) and inverse boundary value problems of increasing difficulty. Built FDM with Newton iteration and PINNs in PyTorch with automatic differentiation, hard/soft boundary enforcement and Adam&nbsp;+&nbsp;L-BFGS training. <b>PINNs recovered unknown parameters from noisy observations — something neither FDM nor analytical methods can do</b> — and second-order FDM convergence was verified empirically.</p>
         <div class="proj-foot">
           <div class="tags">
             <span class="tag">PyTorch</span><span class="tag">PINNs</span><span class="tag">FDM</span><span class="tag">Numerical analysis</span>
           </div>
-          <a class="code-link" href="https://github.com/HeyitsSupro/BVP_Comparative_Study" target="_blank" rel="noopener">view code <span class="arrow">↗</span></a>
+          <a class="code-link" href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">view code <span class="arrow">↗</span></a>
         </div>
       </article>
 
@@ -432,13 +412,14 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
           <span class="when">Apr 2026</span>
           <span>NQFO 2026 contest entry</span>
         </div>
-        <h3><a href="https://github.com/HeyitsSupro/IV_Surface_Completion_NQFO2026" target="_blank" rel="noopener">Implied Volatility Surface Completion</a></h3>
-        <p>A two-layer ensemble (quadratic smile fit&nbsp;+&nbsp;LightGBM) predicting 1,699 missing implied-volatility entries on a synthetic NIFTY50 options surface, anchoring the smile fit on same-day observed IVs to recast the task as within-date interpolation rather than cross-date prediction. <b>No-arbitrage built in</b>: calendar-spread monotonicity via isotonic regression on total variance, butterfly positivity via a convexity constraint on the smile fit; put-call parity left unenforced after EDA confirmed genuine skew rather than noise. K-means regime detection (calm / normal / turbulent) on ATM 1M IV and term-structure slope fed LightGBM, with blend weights tuned per moneyness bucket by leave-one-out validation.</p>
+        <!-- TODO: point this link at the specific repository -->
+        <h3><a href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">Implied volatility surface completion</a></h3>
+        <p>A two-layer ensemble — quadratic smile fit&nbsp;+&nbsp;LightGBM — predicting ~1,700 missing implied-volatility entries on a synthetic NIFTY50 options surface. <b>No-arbitrage built in</b>: calendar-spread monotonicity via isotonic regression, butterfly positivity via constrained quadratic fitting. K-means regime detection (calm / normal / turbulent) on ATM IV and term-structure slope fed LightGBM, with blend weights tuned per moneyness bucket by leave-one-out validation.</p>
         <div class="proj-foot">
           <div class="tags">
             <span class="tag">LightGBM</span><span class="tag">Options</span><span class="tag">Isotonic regression</span><span class="tag">K-means</span>
           </div>
-          <a class="code-link" href="https://github.com/HeyitsSupro/IV_Surface_Completion_NQFO2026" target="_blank" rel="noopener">view code <span class="arrow">↗</span></a>
+          <a class="code-link" href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">view code <span class="arrow">↗</span></a>
         </div>
       </article>
 
@@ -447,22 +428,26 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
           <span class="when">Apr–May 2025</span>
           <span>with Prof. Kaushik Jana</span>
         </div>
-        <h3><a href="https://github.com/HeyitsSupro/E-commerce_Warehouse_Location_Optimization" target="_blank" rel="noopener">E-commerce Warehouse Location Optimization</a></h3>
-        <p>Formulated warehouse placement as a facility location problem and solved it as a MILP in Python (PuLP&nbsp;+&nbsp;CBC) across India’s top 10 e-commerce cities. Modeled binary open/assign decisions under budget, warehouse-count, delivery-time and single-assignment constraints, with Haversine great-circle distances driving the delivery-cost objective. <b>Selected 4 of 10 candidate cities as regional hubs</b> (west / north / south / east) covering all demand centres within the constraints, with solver optimality validated against the model formulation.</p>
+        <!-- TODO: point this link at the specific repository -->
+        <h3><a href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">E-commerce warehouse location optimization</a></h3>
+        <p>A MILP warehouse-placement optimizer in Python (PuLP&nbsp;+&nbsp;CBC) for Indian e-commerce startups across the country’s top 10 cities, using Haversine distances under budget and delivery-time constraints. <b>Cut estimated delivery costs by 12%</b> while the selected warehouses served 80% of the target market within the 36-hour delivery limit.</p>
         <div class="proj-foot">
           <div class="tags">
             <span class="tag">MILP</span><span class="tag">PuLP</span><span class="tag">CBC solver</span><span class="tag">Geospatial</span>
           </div>
-          <a class="code-link" href="https://github.com/HeyitsSupro/E-commerce_Warehouse_Location_Optimization" target="_blank" rel="noopener">view code <span class="arrow">↗</span></a>
+          <a class="code-link" href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">view code <span class="arrow">↗</span></a>
         </div>
       </article>
     </div>
   </section>
 
-  <!-- ============ §4 RESULTS ============ -->
+  <!-- ============ §3 RESULTS ============ -->
   <section id="results" class="wrap">
     <header class="sec reveal">
-      <h2 class="sec-title">Results</h2>
+      <span class="sec-no">§ 3</span>
+      <h2 class="sec-title">Results
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
       <span class="sec-rule" aria-hidden="true"></span>
     </header>
 
@@ -486,10 +471,13 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
     </div>
   </section>
 
-  <!-- ============ §5 SKILLS ============ -->
+  <!-- ============ §4 SKILLS ============ -->
   <section id="skills" class="wrap">
     <header class="sec reveal">
-      <h2 class="sec-title">Skills</h2>
+      <span class="sec-no">§ 4</span>
+      <h2 class="sec-title">Skills
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
       <span class="sec-rule" aria-hidden="true"></span>
     </header>
 
@@ -497,25 +485,19 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
       <div class="skill-group">
         <div class="skill-label">Languages</div>
         <div class="chips">
-          <span class="chip hot">Python (primary)</span><span class="chip">R</span><span class="chip faint">C++ (familiar)</span>
+          <span class="chip hot">Python</span><span class="chip">C++</span><span class="chip">R</span><span class="chip">SQL</span>
         </div>
       </div>
       <div class="skill-group">
-        <div class="skill-label">Python libraries</div>
+        <div class="skill-label">Libraries</div>
         <div class="chips">
-          <span class="chip">NumPy</span><span class="chip">Pandas</span><span class="chip">PyTorch</span><span class="chip">Scikit-learn</span><span class="chip">LightGBM</span><span class="chip">PuLP</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-label">R libraries</div>
-        <div class="chips">
-          <span class="chip">dplyr</span><span class="chip">ggplot2</span><span class="chip">tidyr</span>
+          <span class="chip">NumPy</span><span class="chip">Pandas</span><span class="chip">PyTorch</span><span class="chip">Scikit-learn</span><span class="chip">LightGBM</span><span class="chip">Matplotlib</span><span class="chip">PuLP</span><span class="chip">dplyr</span><span class="chip">ggplot2</span><span class="chip">tidyr</span>
         </div>
       </div>
       <div class="skill-group">
         <div class="skill-label">Tools</div>
         <div class="chips">
-          <span class="chip">Git &amp; GitHub</span><span class="chip">SQL</span><span class="chip">LaTeX</span>
+          <span class="chip">Git &amp; GitHub</span><span class="chip">Excel</span><span class="chip">LaTeX</span>
         </div>
       </div>
       <div class="skill-group">
@@ -527,10 +509,13 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
     </div>
   </section>
 
-  <!-- ============ §6 EDUCATION ============ -->
+  <!-- ============ §5 EDUCATION ============ -->
   <section id="education" class="wrap">
     <header class="sec reveal">
-      <h2 class="sec-title">Education</h2>
+      <span class="sec-no">§ 5</span>
+      <h2 class="sec-title">Education
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
       <span class="sec-rule" aria-hidden="true"></span>
     </header>
 
@@ -538,7 +523,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
       <div class="edu-row">
         <div class="edu-deg">Bachelor of Statistical Data Science</div>
         <div class="edu-inst">Indian Statistical Institute, Kolkata</div>
-        <div class="edu-meta">2024–28 (exp.) · <span class="score">76%</span></div>
+        <div class="edu-meta">2024–28 (exp.) · <span class="score">73.7%</span></div>
       </div>
       <div class="edu-row">
         <div class="edu-deg">Class XII (Senior Secondary), CBSE</div>
@@ -560,10 +545,11 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
           <ul>
             <li>Probability Theory</li>
             <li>Statistical Inference</li>
-            <li>Regression &amp; Linear Statistical Models</li>
-            <li>Nonparametric &amp; Resampling Methods</li>
+            <li>Regression Techniques</li>
+            <li>Linear Statistical Models</li>
+            <li>Multivariate Analysis</li>
+            <li>Nonparametric Inference &amp; MCMC</li>
             <li>Stochastic Processes</li>
-            <li>Monte Carlo &amp; MCMC Methods</li>
           </ul>
         </div>
         <div class="course-col">
@@ -583,6 +569,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
             <li>Real Analysis</li>
             <li>Optimization &amp; Numerical Methods</li>
             <li>Graph Theory</li>
+            <li>Topology</li>
           </ul>
         </div>
         <div class="course-col">
@@ -592,15 +579,6 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
             <li>Macroeconomics</li>
           </ul>
         </div>
-        <div class="course-col">
-          <h4>Ongoing (Sem V)</h4>
-          <ul>
-            <li>Statistical Learning</li>
-            <li>Bayesian Inference</li>
-            <li>Advanced Statistical Methods II</li>
-            <li>Signal, Image &amp; Text Processing</li>
-          </ul>
-        </div>
       </div>
     </div>
   </section>
@@ -608,7 +586,10 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
   <!-- ============ APPENDIX ============ -->
   <section id="beyond" class="wrap">
     <header class="sec reveal">
-      <h2 class="sec-title">Beyond the syllabus</h2>
+      <span class="sec-no">Appendix A</span>
+      <h2 class="sec-title">Beyond the syllabus
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
       <span class="sec-rule" aria-hidden="true"></span>
     </header>
 
@@ -616,7 +597,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
       <article class="appx">
         <div class="glyph">&lt;/&gt;</div>
         <h3>Competitive programming</h3>
-        <p>Regular on <a href="https://codeforces.com/profile/HeyitsSupro" target="_blank" rel="noopener">Codeforces</a> — <span class="mono">max rating 1436</span>, 100+ problems solved. Contests are the gym for clean, fast thinking under pressure.</p>
+        <p>Regular on Codeforces — <span class="mono">max rating 1436</span>, 100+ problems solved. Contests are the gym for clean, fast thinking under pressure.</p>
       </article>
       <article class="appx">
         <div class="glyph">[CPU]</div>
@@ -631,10 +612,13 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
     </div>
   </section>
 
-  <!-- ============ §7 CONTACT ============ -->
+  <!-- ============ §6 CONTACT ============ -->
   <section id="contact" class="wrap">
     <header class="sec reveal">
-      <h2 class="sec-title">Correspondence</h2>
+      <span class="sec-no">§ 6</span>
+      <h2 class="sec-title">Correspondence
+        <svg class="scribble" viewBox="0 0 230 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 3, 130 11, 227 5"/></svg>
+      </h2>
       <span class="sec-rule" aria-hidden="true"></span>
     </header>
 
@@ -653,6 +637,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
 <footer>
   <div class="foot-inner">
     <span>© <span id="yr">2026</span> Supratik Biswas</span>
+    <span>Set in STIX Two Text &amp; IBM Plex · hand-coded, no frameworks, no trackers</span>
   </div>
 </footer>
 
@@ -688,7 +673,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
   });
 
   /* ---------- active nav link ---------- */
-  var sections = ["about","experience","work","results","skills","education","contact"].map(function(id){
+  var sections = ["about","work","results","skills","education","contact"].map(function(id){
     return document.getElementById(id);
   });
   var linkMap = {};
@@ -704,7 +689,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
     if(current && linkMap[current]) linkMap[current].classList.add("active");
   }
 
-  /* ---------- scroll reveals: pop-in with stagger ---------- */
+  /* ---------- scroll reveals (with stagger) ---------- */
   document.querySelectorAll(".stagger").forEach(function(group){
     Array.prototype.forEach.call(group.children, function(child, i){
       child.classList.add("reveal");
@@ -732,6 +717,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
   /* ================= Fig. 0 — live GBM chart ================= */
   var frame = document.getElementById("chartFrame");
   var canvas = document.getElementById("gbm");
+  var seedLbl = document.getElementById("seedLbl");
   var resimBtn = document.getElementById("resim");
   if(!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext("2d");
@@ -773,6 +759,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
       data.push(prev * Math.exp((MU - 0.5*SIG*SIG)*DT + SIG*Math.sqrt(DT)*gauss(r)));
     }
     tCount = N - 1;
+    seedLbl.textContent = "seed 0x" + ("0000" + seed.toString(16)).slice(-4);
   }
 
   function bounds(){

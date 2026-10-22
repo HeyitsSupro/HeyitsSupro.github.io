@@ -3,8 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Supratik Biswas — Statistics, Optimization & Quantitative Finance</title>
-<meta name="description" content="Portfolio of Supratik Biswas — Statistical Data Science undergrad at ISI Kolkata. Quantitative finance, machine learning, optimization, competitive programming.">
+<title>Supratik Biswas — Portfolio Website</title>
+<meta name="description" content="Portfolio of Supratik Biswas — Statistical Data Science undergrad at ISI Kolkata. Quantitative finance, Machine Learning, Statistics.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Supratik Biswas — Portfolio Website">
+<meta property="og:description" content="Statistical Data Science at ISI Kolkata.">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#FCFCFA">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>σ</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -246,7 +252,7 @@ td.ev{color:var(--muted)}
 .course-col li::before{content:"–";margin-right:8px;color:var(--hair)}
 
 /* ============ appendix ============ */
-.appx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.appx-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
 .appx{
   background:var(--card);border:1px solid var(--hair);border-radius:3px;padding:24px 26px;
   transition:border-color .2s, transform .25s, box-shadow .25s;
@@ -316,6 +322,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
   .proj,.appx,.chip,.btn{transition:none}
 }
 </style>
+<noscript><style>.reveal{opacity:1;transform:none}.scribble path{stroke-dashoffset:0}</style></noscript>
 </head>
 <body>
 
@@ -334,13 +341,14 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
       <li><a href="#results">Results</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#education">Education</a></li>
+      <li><a href="#beyond">Extracurricular</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
 </nav>
 
 <header class="hero wrap" id="top">
-  <p class="eyebrow reveal">Indian Statistical Institute, Kolkata <span class="dot">·</span> Statistical Data Science ’24–’28</p>
+  <p class="eyebrow reveal">Indian Statistical Institute, Kolkata <span class="dot">·</span> Statistical Data Science ’24–’29</p>
   <h1 class="reveal">Supratik Biswas</h1>
   <p class="tagline reveal">I take messy, open-ended problems and turn them into <b>models, algorithms and working code</b> — across quantitative finance, machine learning and data science. Preferably the laziest solution that is still correct.</p>
   <div class="hero-links reveal">
@@ -351,6 +359,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
   <div class="cta-row reveal">
     <a class="btn primary" href="#work">View selected work ↓</a>
     <a class="btn" href="#contact">Get in touch</a>
+      <a class="btn" href="Supratik_Biswas_CV.pdf" target="_blank" rel="noopener">Download CV ↓</a>
   </div>
 
   <figure class="fig0 reveal">
@@ -376,11 +385,11 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
     </header>
     <div class="about-grid">
       <div class="about-prose reveal">
-        <p>I’m a third-year Statistical Data Science student at ISI Kolkata with a strong programming and problem-solving background. I build projects end to end, from the statistical or mathematical formulation through to working code, and pick up new tools and methods quickly as each problem needs them. Comfortable in Python and R, working across machine learning, data science and quantitative finance.</p>
+        <p>I’m a third-year Statistical Data Science student at ISI Kolkata with a strong programming and problem-solving background. I build projects end to end, from the statistical or mathematical formulation through to working code, and pick up new tools and methods quickly as each problem needs them. Comfortable in Python and R, working across Quantitative Finance, Machine Learning and Data Science. Currently looking for internships and programs in these areas.</p>
       </div>
       <aside class="marginalia reveal" aria-label="Quick facts">
         <div><span class="k">based in</span> — <span class="v">Kolkata, IN</span></div>
-        <div><span class="k">studying</span> — <span class="v">Bachelor of Statistical Data Science, ISI Kolkata</span></div>
+        <div><span class="k">studying</span> — <span class="v">Statistical Data Science (Hons.) → Integrated Master’s, ISI Kolkata</span></div>
         <div><span class="k">focus</span> — <span class="v">Quant · AI/ML · Data Science</span></div>
         <div><span class="k">codes in</span> — <span class="v">Python · R</span></div>
         <div><span class="k">speaks</span> — <span class="v">English · Hindi · Bengali</span></div>
@@ -450,7 +459,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
         <p>A two-layer ensemble (quadratic smile fit&nbsp;+&nbsp;LightGBM) predicting 1,699 missing implied-volatility entries on a synthetic NIFTY50 options surface, anchoring the smile fit on same-day observed IVs to recast the task as within-date interpolation rather than cross-date prediction. <b>No-arbitrage built in</b>: calendar-spread monotonicity via isotonic regression on total variance, butterfly positivity via a convexity constraint on the smile fit; put-call parity left unenforced after EDA confirmed genuine skew rather than noise. K-means regime detection (calm / normal / turbulent) on ATM 1M IV and term-structure slope fed LightGBM, with blend weights tuned per moneyness bucket by leave-one-out validation.</p>
         <div class="proj-foot">
           <div class="tags">
-            <span class="tag">LightGBM</span><span class="tag">Options</span><span class="tag">Isotonic regression</span><span class="tag">K-means</span>
+            <span class="tag">LightGBM</span><span class="tag">Options</span><span class="tag">Volatility surface</span><span class="tag">Isotonic regression</span><span class="tag">K-means</span>
           </div>
           <a class="code-link" href="https://github.com/HeyitsSupro/IV_Surface_Completion_NQFO2026" target="_blank" rel="noopener">view code <span class="arrow">↗</span></a>
         </div>
@@ -482,13 +491,14 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
       <span class="sec-rule" aria-hidden="true"></span>
     </header>
 
-    <p class="tablecap reveal"><span class="figno">Table 1</span> — Selected competitive results, 2019–2025.</p>
+    <p class="tablecap reveal"><span class="figno">Table 1</span> — Selected results and rankings.</p>
     <div class="table-scroll reveal">
       <table>
         <thead>
           <tr><th>Year</th><th>Result</th><th>Event</th></tr>
         </thead>
         <tbody>
+          <tr><td class="yr">2026</td><td class="res"><span class="hl">1st Runner-Up</span></td><td class="ev">QuantStorm 2026, sponsored by Optiver and Jane Street</td></tr>
           <tr><td class="yr">2025</td><td class="res"><span class="hl">Global Rank 249</span> · AIR 43</td><td class="ev">Prosperity 3 Challenge, IMC Trading</td></tr>
           <tr><td class="yr">2024</td><td class="res">Rank 1, category</td><td class="ev">ISI Entrance Examination</td></tr>
           <tr><td class="yr">2024</td><td class="res">Rank 87, category</td><td class="ev">WBJEE</td></tr>
@@ -556,9 +566,14 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
 
     <div class="stagger">
       <div class="edu-row">
-        <div class="edu-deg">Bachelor of Statistical Data Science</div>
+        <div class="edu-deg">Integrated Master of Statistical Data Science <em>(upcoming)</em></div>
         <div class="edu-inst">Indian Statistical Institute, Kolkata</div>
-        <div class="edu-meta">2024–28 (exp.) · <span class="score">76.5%</span></div>
+        <div class="edu-meta">Jul 2028–May 2029</div>
+      </div>
+      <div class="edu-row">
+        <div class="edu-deg">Bachelor of Statistical Data Science (Hons.)</div>
+        <div class="edu-inst">Indian Statistical Institute, Kolkata</div>
+        <div class="edu-meta">Jul 2024–May 2028 · <span class="score">76.5%</span> (Distinction)</div>
       </div>
       <div class="edu-row">
         <div class="edu-deg">Class XII (Senior Secondary), CBSE</div>
@@ -651,9 +666,9 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
         <p>Speedsolving and collecting a wide variety of Rubik’s cubes and twisty puzzles. Group theory you can hold in one hand.</p>
       </article>
       <article class="appx">
-        <div class="glyph">3×3</div>
+        <div class="glyph">A♠ K♠</div>
         <h3>Poker</h3>
-        <p>Recreational Poker player with interest in the Game-Theoretic and Decision-Making aspects of the game — I'm always down for a game of poker.</p>
+        <p>Recreational poker player with interest in the game-theoretic and decision-making aspects of the game — I’m always down for a game of poker. <a href="https://heyitssupro.github.io/Poker-Stats/" target="_blank" rel="noopener">View stats ↗</a></p>
       </article>
     </div>
   </section>
@@ -674,6 +689,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
         <a href="https://github.com/HeyitsSupro" target="_blank" rel="noopener">GitHub ↗</a>
         <a href="https://linkedin.com/in/supratikbiswas" target="_blank" rel="noopener">LinkedIn ↗</a>
         <a href="mailto:supratikbiswas100@gmail.com">Email ↗</a>
+        <a href="Supratik_Biswas_CV.pdf" target="_blank" rel="noopener">CV ↗</a>
       </div>
     </div>
   </section>
@@ -717,7 +733,7 @@ footer{border-top:1px solid var(--hair);padding:26px 0 34px}
   });
 
   /* ---------- active nav link ---------- */
-  var sections = ["about","experience","work","results","skills","education","contact"].map(function(id){
+  var sections = ["about","experience","work","results","skills","education","extracurricular","contact"].map(function(id){
     return document.getElementById(id);
   });
   var linkMap = {};
